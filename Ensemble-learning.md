@@ -27,9 +27,47 @@ for i in range(0,len(x_test)):
     final_pred = np.append(final_pred, mode([pred1[i], pred2[i], pred3[i]]))
 ```
 
+Or using sklearn.ensemble import VotingClassifier instead.
+
 ### 2.2 Averaging
 
+Similar to the max voting technique, multiple predictions are made for each data point in averaging. In this method, we take an average of predictions from all the models and use it to make the final prediction. Averaging can be used for making predictions in regression problems or while calculating probabilities for classification problems.
+
+```python
+model1 = tree.DecisionTreeClassifier()
+model2 = KNeighborsClassifier()
+model3= LogisticRegression()
+
+model1.fit(x_train,y_train)
+model2.fit(x_train,y_train)
+model3.fit(x_train,y_train)
+
+pred1=model1.predict_proba(x_test)
+pred2=model2.predict_proba(x_test)
+pred3=model3.predict_proba(x_test)
+
+finalpred=(pred1+pred2+pred3)/3
+```
+
 ### 2.3 Weighted Average
+
+This is an extension of the averaging method. All models are assigned different weights defining the importance of each model for prediction. For instance, if two of your colleagues are critics, while others have no prior experience in this field, then the answers by these two friends are given more importance as compared to the other people.
+
+```python
+model1 = tree.DecisionTreeClassifier()
+model2 = KNeighborsClassifier()
+model3= LogisticRegression()
+
+model1.fit(x_train,y_train)
+model2.fit(x_train,y_train)
+model3.fit(x_train,y_train)
+
+pred1=model1.predict_proba(x_test)
+pred2=model2.predict_proba(x_test)
+pred3=model3.predict_proba(x_test)
+
+finalpred=(pred1*0.3+pred2*0.3+pred3*0.4)
+```
 
 ## Advanced Ensemble Techniques
 
